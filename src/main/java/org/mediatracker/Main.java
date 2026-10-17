@@ -8,5 +8,6 @@ public class Main {
         System.out.println("Type: " + manga.getType());
         System.out.println("Status: " + manga.getStatus());
         System.out.println("Rating: " + manga.getRating());
+        System.out.println(manga);
     }
 }

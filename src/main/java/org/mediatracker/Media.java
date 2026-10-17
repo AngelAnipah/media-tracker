@@ -48,4 +48,12 @@ public class Media {
 
         this.rating = rating;
     }
+
+    @Override
+    public String toString() {
+        return "Title: " + title
+                + ", Type: " + type
+                + ", Status: " + status
+                + ", Rating: " + rating;
+    }
 }
