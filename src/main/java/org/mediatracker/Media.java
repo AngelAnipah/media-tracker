@@ -10,7 +10,7 @@ public class Media {
         this.title = title;
         this.type = type;
         this.status = status;
-        this.rating = rating;
+        setRating(rating);
     }
 
     public String getTitle() {
@@ -42,6 +42,10 @@ public class Media {
     }
 
     public void setRating(double rating) {
+        if (rating < 0.0 || rating > 10.0) {
+            throw new IllegalArgumentException("Rating must be between 0 and 10.");
+        }
+
         this.rating = rating;
     }
 }
