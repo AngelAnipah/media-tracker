@@ -22,6 +22,17 @@ public class MediaLibrary {
         return null;
     }
 
+    public boolean removeByTitle(String title) {
+        Media media = searchByTitle(title);
+
+        if (media != null) {
+            library.remove(media);
+            return true;
+        }
+
+        return false;
+    }
+
     public ArrayList<Media> getALlMedia() {
         return new ArrayList<>(library);
     }

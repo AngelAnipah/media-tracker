@@ -1,7 +1,5 @@
 package org.mediatracker;
 
-import java.util.ArrayList;
-
 public class Main {
     public static void main(String[] args) {
         MediaLibrary library = new MediaLibrary();
@@ -9,11 +7,11 @@ public class Main {
         library.addMedia(new Media("Solo Leveling", "Manhwa", "Planned", 8.0));
         library.addMedia(new Media("Reverend Insanity", "Novel", "Planned", 8.5));
 
-        Media result = library.searchByTitle("bleach");
+        boolean removed = library.removeByTitle("berserk");
+        System.out.println("Removed Berserk: "  + removed);
 
-        if (result != null)
-            System.out.println("Found: " + result);
-        else
-            System.out.println("Media not found.");
+        System.out.println("\nRemaining library:");
+        for (Media item : library.getALlMedia())
+            System.out.println(item);
     }
 }
