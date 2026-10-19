@@ -4,17 +4,16 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<Media> library = new ArrayList<>();
+        MediaLibrary library = new MediaLibrary();
+        library.addMedia(new Media("Berserk", "Manga", "Reading", 9.5));
+        library.addMedia(new Media("Solo Leveling", "Manhwa", "Planned", 8.0));
+        library.addMedia(new Media("Reverend Insanity", "Novel", "Planned", 8.5));
 
-        Media manga = new Media("Berserk", "Manga", "Reading", 9.5);
-        Media manhwa = new Media("Solo Leveling", "Manhwa", "Planned", 8.0);
-        Media novel = new Media("Reverend Insanity", "Novel", "Planned", 8.5);
+        Media result = library.searchByTitle("bleach");
 
-        library.add(manga);
-        library.add(manhwa);
-        library.add(novel);
-
-        for (Media item: library)
-            System.out.println(item);
+        if (result != null)
+            System.out.println("Found: " + result);
+        else
+            System.out.println("Media not found.");
     }
 }
