@@ -33,6 +33,28 @@ public class MediaLibrary {
         return false;
     }
 
+    public boolean updateStatus(String title, String newStatus) {
+        Media media = searchByTitle(title);
+
+        if (media != null) {
+            media.setStatus(newStatus);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean updateRating(String title, double newRating) {
+        Media media = searchByTitle(title);
+
+        if (media != null) {
+            media.setRating(newRating);
+            return true;
+        }
+
+        return false;
+    }
+
     public ArrayList<Media> getALlMedia() {
         return new ArrayList<>(library);
     }
