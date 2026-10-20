@@ -55,7 +55,7 @@ public class MediaLibrary {
         return false;
     }
 
-    public ArrayList<Media> getALlMedia() {
+    public ArrayList<Media> getAllMedia() {
         return new ArrayList<>(library);
     }
 }

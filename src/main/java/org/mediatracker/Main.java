@@ -4,22 +4,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        MediaLibrary library = new MediaLibrary();
-        library.addMedia(new Media("Berserk", "Manga", "Reading", 9.5));
-
-        boolean statusUpdated = library.updateStatus("Berserk", "Completed");
-        boolean ratingUpdated = library.updateRating("Berserk", 10.0);
-
-        library.addMedia(new Media("Solo Leveling", "Manhwa", "Planned", 8.0));
-        library.addMedia(new Media("Reverend Insanity", "Novel", "Planned", 8.5));
-
-        System.out.println("Status updated: " + statusUpdated);
-        System.out.println("Rating updated: " + ratingUpdated);
-
-        Media result = library.searchByTitle("Berserk");
-        System.out.println(result);
-
         Scanner scanner = new Scanner(System.in);
+        MediaLibrary library = new MediaLibrary();
 
         int choice = -1;
 
@@ -37,7 +23,46 @@ public class Main {
             choice = scanner.nextInt();
             scanner.nextLine();
 
-            System.out.println("You chose: " + choice);
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter title: ");
+                    String title = scanner.nextLine();
+
+                    System.out.print("Enter type (Manga, Manhwa, Manhua, Novel): ");
+                    String type = scanner.nextLine();
+
+                    System.out.print("Enter status (Reading, Completed, Planned, Dropped): ");
+                    String status = scanner.nextLine();
+
+                    System.out.print("Enter rating (0-10): ");
+                    double rating = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    Media media = new Media(title, type, status, rating);
+                    library.addMedia(media);
+
+                    System.out.println("Media added successfully!");
+                    break;
+
+                case 2:
+                    if (library.getAllMedia().isEmpty())
+                        System.out.println("Your library is empty.");
+                    else {
+                        System.out.println("\n===== YOUR LIBRARY =====");
+
+                        for (Media item : library.getAllMedia())
+                            System.out.println(item);
+                    }
+                    break;
+
+                case 0:
+                    System.out.println("Goodbye!");
+                    break;
+
+                default:
+                    System.out.println("That option isn't implemented yet.");
+                    break;
+            }
         }
         scanner.close();
         System.out.println("Goodbye!");
