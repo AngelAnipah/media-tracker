@@ -69,6 +69,27 @@ public class Main {
                     }
                     break;
 
+                case 4:
+                    System.out.println("Enter the title to update: ");
+                    String statusTitle = scanner.nextLine();
+
+                    Media existingMedia = library.searchByTitle(statusTitle);
+
+                    if (existingMedia == null) {
+                        System.out.println("Media not found.");
+                    } else {
+                        System.out.println("Enter new status (Reading, Completed, Planned, Dropped): ");
+                        String newStatus = scanner.nextLine();
+
+                        boolean updated = library.updateStatus(statusTitle, newStatus);
+
+                        if (updated) {
+                            System.out.println("Status updated successfully!");
+                            System.out.println(library.searchByTitle(statusTitle));
+                        }
+                    }
+                    break;
+
                 case 0:
                     System.out.println("Goodbye!");
                     break;
