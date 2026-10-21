@@ -55,6 +55,20 @@ public class Main {
                     }
                     break;
 
+                case 3:
+                    System.out.print("Enter the title to search for: ");
+                    String searchTitle = scanner.nextLine();
+
+                    Media found = library.searchByTitle(searchTitle);
+
+                    if (found != null) {
+                        System.out.println("Media found:");
+                        System.out.println(found);
+                    } else {
+                        System.out.println("Media not found.");
+                    }
+                    break;
+
                 case 0:
                     System.out.println("Goodbye!");
                     break;
