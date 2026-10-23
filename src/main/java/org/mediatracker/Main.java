@@ -111,6 +111,19 @@ public class Main {
                         }
                     }
                     break;
+
+                case 6:
+                    System.out.println("Enter the title to remove");
+                    String removeTitle = scanner.nextLine();
+
+                    boolean removed = library.removeByTitle(removeTitle);
+
+                    if (removed)
+                        System.out.println("Media removed successfully!");
+                    else
+                        System.out.println("Media not found.");
+                    break;
+
                 case 0:
                     System.out.println("Goodbye!");
                     break;
