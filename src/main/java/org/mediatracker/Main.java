@@ -90,6 +90,27 @@ public class Main {
                     }
                     break;
 
+                case 5:
+                    System.out.println("Enter the title to update: ");
+                    String ratingTitle = scanner.nextLine();
+
+                    Media ratingMedia = library.searchByTitle(ratingTitle);
+
+                    if (ratingMedia == null) {
+                        System.out.println("Media not found.");
+                    } else {
+                        System.out.println("Enter new rating (0-10): ");
+                        double newRating = scanner.nextDouble();
+                        scanner.nextLine();
+
+                        boolean updated = library.updateRating(ratingTitle, newRating);
+
+                        if (updated) {
+                            System.out.println("Rating updated successfully!");
+                            System.out.println(library.searchByTitle(ratingTitle));
+                        }
+                    }
+                    break;
                 case 0:
                     System.out.println("Goodbye!");
                     break;
