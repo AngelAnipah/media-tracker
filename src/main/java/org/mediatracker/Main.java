@@ -4,9 +4,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        DatabaseManager.createTable();
-        Scanner scanner = new Scanner(System.in);
         MediaLibrary library = new MediaLibrary();
+
+        DatabaseManager.createTable();
+        DatabaseManager.loadMedia(library);
+
+        Scanner scanner = new Scanner(System.in);
 
         int choice = -1;
 
@@ -41,6 +44,7 @@ public class Main {
 
                     Media media = new Media(title, type, status, rating);
                     library.addMedia(media);
+                    DatabaseManager.saveMedia(media);
 
                     System.out.println("Media added successfully!");
                     break;
