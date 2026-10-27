@@ -125,4 +125,70 @@ public class DatabaseManager {
             e.printStackTrace();
         }
     }
+
+    public static void updateMediaStatus(String title, String newStatus) {
+        String sql = "UPDATE media SET status = ? WHERE title = ?;";
+
+        try (Connection connection = connect();
+             var statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, newStatus);
+            statement.setString(2, title);
+
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated > 0)
+                System.out.println("Media status saved to database.");
+            else
+                System.out.println("No matching media found in database.");
+
+        } catch (SQLException e) {
+            System.out.println("Could not update media status.");
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateMediaRating(String title, double newRating) {
+        String sql = "UPDATE media SET rating = ? WHERE title = ?;";
+
+        try (Connection connection = connect();
+             var statement = connection.prepareStatement(sql)) {
+
+            statement.setDouble(1, newRating);
+            statement.setString(2, title);
+
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated > 0)
+                System.out.println("Media rating saved to database.");
+            else
+                System.out.println("No matching media found in database.");
+
+        } catch (SQLException e) {
+            System.out.println("Could not update media rating.");
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteMedia(String title) {
+        String sql = "DELETE FROM media WHERE title = ?;";
+
+        try (Connection connection = connect();
+             var statement = connection.prepareStatement(sql)) {
+
+            statement.setString(1, title);
+
+            int rowsDeleted = statement.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                System.out.println("Media deleted from database.");
+            } else {
+                System.out.println("No matching media found in database.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Could not delete media.");
+            e.printStackTrace();
+        }
+    }
 }

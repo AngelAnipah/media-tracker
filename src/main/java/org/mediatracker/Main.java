@@ -1,5 +1,6 @@
 package org.mediatracker;
 
+import javax.xml.crypto.Data;
 import java.util.Scanner;
 
 public class Main {
@@ -89,6 +90,7 @@ public class Main {
                         boolean updated = library.updateStatus(statusTitle, newStatus);
 
                         if (updated) {
+                            DatabaseManager.updateMediaStatus(statusTitle, newStatus);
                             System.out.println("Status updated successfully!");
                             System.out.println(library.searchByTitle(statusTitle));
                         }
@@ -111,6 +113,7 @@ public class Main {
                         boolean updated = library.updateRating(ratingTitle, newRating);
 
                         if (updated) {
+                            DatabaseManager.updateMediaRating(ratingTitle, newRating);
                             System.out.println("Rating updated successfully!");
                             System.out.println(library.searchByTitle(ratingTitle));
                         }
@@ -118,15 +121,17 @@ public class Main {
                     break;
 
                 case 6:
-                    System.out.println("Enter the title to remove");
+                    System.out.println("Enter the title to remove: ");
                     String removeTitle = scanner.nextLine();
 
                     boolean removed = library.removeByTitle(removeTitle);
 
-                    if (removed)
+                    if (removed) {
+                        DatabaseManager.deleteMedia(removeTitle);
                         System.out.println("Media removed successfully!");
-                    else
+                    } else {
                         System.out.println("Media not found.");
+                    }
                     break;
 
                 case 0:
