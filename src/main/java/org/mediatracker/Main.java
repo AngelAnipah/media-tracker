@@ -90,7 +90,7 @@ public class Main {
                         boolean updated = library.updateStatus(statusTitle, newStatus);
 
                         if (updated) {
-                            DatabaseManager.updateMediaStatus(statusTitle, newStatus);
+                            DatabaseManager.updateMediaStatus(existingMedia.getId(), newStatus);
                             System.out.println("Status updated successfully!");
                             System.out.println(library.searchByTitle(statusTitle));
                         }
@@ -113,7 +113,7 @@ public class Main {
                         boolean updated = library.updateRating(ratingTitle, newRating);
 
                         if (updated) {
-                            DatabaseManager.updateMediaRating(ratingTitle, newRating);
+                            DatabaseManager.updateMediaRating(ratingMedia.getId(), newRating);
                             System.out.println("Rating updated successfully!");
                             System.out.println(library.searchByTitle(ratingTitle));
                         }
@@ -124,13 +124,17 @@ public class Main {
                     System.out.println("Enter the title to remove: ");
                     String removeTitle = scanner.nextLine();
 
-                    boolean removed = library.removeByTitle(removeTitle);
+                    Media mediaToRemove = library.searchByTitle(removeTitle);
 
-                    if (removed) {
-                        DatabaseManager.deleteMedia(removeTitle);
-                        System.out.println("Media removed successfully!");
-                    } else {
+                    if (mediaToRemove == null) {
                         System.out.println("Media not found.");
+
+                    } else {
+                        DatabaseManager.deleteMedia(mediaToRemove.getId());
+                        boolean removed = library.removeByTitle(removeTitle);
+
+                        if (removed)
+                            System.out.println("Media removed successfully!");
                     }
                     break;
 

@@ -3,6 +3,7 @@ package org.mediatracker;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DatabaseManager {
     private static final String URL = "jdbc:sqlite:media-tracker.db";
@@ -87,7 +88,8 @@ public class DatabaseManager {
                 """;
 
         try (Connection connection = connect();
-             var statement = connection.prepareStatement(sql)) {
+             var statement = connection.prepareStatement(sql,
+                     Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, media.getTitle());
             statement.setString(2, media.getType());
@@ -95,7 +97,15 @@ public class DatabaseManager {
             statement.setDouble(4, media.getRating());
 
             statement.executeUpdate();
+
+            try (var resultSet = statement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    media.setId(resultSet.getInt(1));
+                }
+            }
+
             System.out.println("Media saved to database.");
+
         } catch (SQLException e) {
             System.out.println("Could not save media.");
             e.printStackTrace();
@@ -103,19 +113,21 @@ public class DatabaseManager {
     }
 
     public static void loadMedia(MediaLibrary library) {
-        String sql = "SELECT title, type, status, rating FROM media;";
+        String sql = "SELECT id, title, type, status, rating FROM media;";
 
         try (Connection connection = connect();
              var statement = connection.createStatement();
              var resultSet = statement.executeQuery(sql)) {
 
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String title = resultSet.getString("title");
                 String type = resultSet.getString("type");
                 String status = resultSet.getString("status");
                 double rating = resultSet.getDouble("rating");
 
                 Media media = new Media (title, type, status, rating);
+                media.setId(id);
                 library.addMedia(media);
             }
 
@@ -126,14 +138,14 @@ public class DatabaseManager {
         }
     }
 
-    public static void updateMediaStatus(String title, String newStatus) {
-        String sql = "UPDATE media SET status = ? WHERE title = ?;";
+    public static void updateMediaStatus(int id, String newStatus) {
+        String sql = "UPDATE media SET status = ? WHERE id = ?;";
 
         try (Connection connection = connect();
              var statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, newStatus);
-            statement.setString(2, title);
+            statement.setInt(2, id);
 
             int rowsUpdated = statement.executeUpdate();
 
@@ -148,14 +160,14 @@ public class DatabaseManager {
         }
     }
 
-    public static void updateMediaRating(String title, double newRating) {
-        String sql = "UPDATE media SET rating = ? WHERE title = ?;";
+    public static void updateMediaRating(int id, double newRating) {
+        String sql = "UPDATE media SET rating = ? WHERE id = ?;";
 
         try (Connection connection = connect();
              var statement = connection.prepareStatement(sql)) {
 
             statement.setDouble(1, newRating);
-            statement.setString(2, title);
+            statement.setInt(2, id);
 
             int rowsUpdated = statement.executeUpdate();
 
@@ -170,13 +182,13 @@ public class DatabaseManager {
         }
     }
 
-    public static void deleteMedia(String title) {
-        String sql = "DELETE FROM media WHERE title = ?;";
+    public static void deleteMedia(int id) {
+        String sql = "DELETE FROM media WHERE id = ?;";
 
         try (Connection connection = connect();
              var statement = connection.prepareStatement(sql)) {
 
-            statement.setString(1, title);
+            statement.setInt(1, id);
 
             int rowsDeleted = statement.executeUpdate();
 

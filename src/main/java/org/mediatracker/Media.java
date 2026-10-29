@@ -1,6 +1,7 @@
 package org.mediatracker;
 
 public class Media {
+    private int id;
     private String title;
     private String type;
     private String status;
@@ -11,6 +12,14 @@ public class Media {
         this.type = type;
         this.status = status;
         setRating(rating);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
