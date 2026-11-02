@@ -34,28 +34,6 @@ public class DatabaseManager {
         }
     }
 
-    public static void insertTestMedia() {
-        String sql = """
-                INSERT INTO media (title, type, status, rating)
-                VALUES (?, ?, ?, ?);
-                """;
-
-        try (Connection connection = connect();
-             var statement = connection.prepareStatement(sql)) {
-
-            statement.setString(1, "One Piece");
-            statement.setString(2, "Manga");
-            statement.setString(3, "Reading");
-            statement.setDouble(4, 9.5);
-
-            statement.executeUpdate();
-            System.out.println("Test media inserted succesfully.");
-        } catch (SQLException e) {
-            System.out.println("Could not insert test media.");
-            e.printStackTrace();
-        }
-    }
-
     public static void readAllMedia() {
         String sql = "SELECT id, title, type, status, rating FROM media;";
 
